@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ModelStoreDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_Accounts">
+    <Key>
+      <PropertyRef Name="Account_ID" />
+    </Key>
+    <Property Name="Account_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Account_UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Account_Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Role_ID" Type="Int32" />
+    <Property Name="Account_CreatedDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="tbl_Roles" Relationship="Self.FK_Account_UserName_To_Roles_ID" FromRole="tbl_Accounts" ToRole="tbl_Roles" />
+    <NavigationProperty Name="tbl_Orders" Relationship="Self.FK_AccountOrder" FromRole="tbl_Accounts" ToRole="tbl_Orders" />
+    <NavigationProperty Name="tbl_Customers" Relationship="Self.FK_CustomerAccount" FromRole="tbl_Accounts" ToRole="tbl_Customers" />
+  </EntityType>
+  <EntityType Name="tbl_Customers">
+    <Key>
+      <PropertyRef Name="Customer_ID" />
+    </Key>
+    <Property Name="Customer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customer_FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Customer_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Customer_BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="Customer_EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Customer_Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Customer_City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Customer_Mobile" Type="Int32" Nullable="false" />
+    <Property Name="Customer_Phone" Type="Int32" />
+    <Property Name="Customer_CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="tbl_Accounts" Relationship="Self.FK_CustomerAccount" FromRole="tbl_Customers" ToRole="tbl_Accounts" />
+    <NavigationProperty Name="tbl_Orders" Relationship="Self.FK_CustomerOrder" FromRole="tbl_Customers" ToRole="tbl_Orders" />
+  </EntityType>
+  <EntityType Name="tbl_Orders">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Order_Number" Type="Int32" Nullable="false" />
+    <Property Name="Order_Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="AccountID" Type="Int32" />
+    <NavigationProperty Name="tbl_Accounts" Relationship="Self.FK_AccountOrder" FromRole="tbl_Orders" ToRole="tbl_Accounts" />
+    <NavigationProperty Name="tbl_Customers" Relationship="Self.FK_CustomerOrder" FromRole="tbl_Orders" ToRole="tbl_Customers" />
+  </EntityType>
+  <EntityType Name="tbl_Roles">
+    <Key>
+      <PropertyRef Name="Role_ID" />
+    </Key>
+    <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_Accounts" Relationship="Self.FK_Account_UserName_To_Roles_ID" FromRole="tbl_Roles" ToRole="tbl_Accounts" />
+  </EntityType>
+  <Association Name="FK_Account_UserName_To_Roles_ID">
+    <End Role="tbl_Roles" Type="Self.tbl_Roles" Multiplicity="0..1" />
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Roles">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="tbl_Accounts">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountOrder">
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="0..1" />
+    <End Role="tbl_Orders" Type="Self.tbl_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Accounts">
+        <PropertyRef Name="Account_ID" />
+      </Principal>
+      <Dependent Role="tbl_Orders">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerAccount">
+    <End Role="tbl_Customers" Type="Self.tbl_Customers" Multiplicity="0..1" />
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Customers">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="tbl_Accounts">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerOrder">
+    <End Role="tbl_Customers" Type="Self.tbl_Customers" Multiplicity="0..1" />
+    <End Role="tbl_Orders" Type="Self.tbl_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Customers">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="tbl_Orders">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StoreEntity" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Accounts" EntityType="Self.tbl_Accounts" />
+    <EntitySet Name="tbl_Customers" EntityType="Self.tbl_Customers" />
+    <EntitySet Name="tbl_Orders" EntityType="Self.tbl_Orders" />
+    <EntitySet Name="tbl_Roles" EntityType="Self.tbl_Roles" />
+    <AssociationSet Name="FK_Account_UserName_To_Roles_ID" Association="Self.FK_Account_UserName_To_Roles_ID">
+      <End Role="tbl_Roles" EntitySet="tbl_Roles" />
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountOrder" Association="Self.FK_AccountOrder">
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+      <End Role="tbl_Orders" EntitySet="tbl_Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerAccount" Association="Self.FK_CustomerAccount">
+      <End Role="tbl_Customers" EntitySet="tbl_Customers" />
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerOrder" Association="Self.FK_CustomerOrder">
+      <End Role="tbl_Customers" EntitySet="tbl_Customers" />
+      <End Role="tbl_Orders" EntitySet="tbl_Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

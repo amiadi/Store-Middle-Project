@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Store_MVCModelStoreContainer" CdmEntityContainer="Store_MVCEntities">
+    <EntitySetMapping Name="tbl_Accounts">
+      <EntityTypeMapping TypeName="Store_MVCModel.tbl_Accounts">
+        <MappingFragment StoreEntitySet="tbl_Accounts">
+          <ScalarProperty Name="Account_ID" ColumnName="Account_ID" />
+          <ScalarProperty Name="Account_FirstName" ColumnName="Account_FirstName" />
+          <ScalarProperty Name="Account_LastName" ColumnName="Account_LastName" />
+          <ScalarProperty Name="Account_BirthDate" ColumnName="Account_BirthDate" />
+          <ScalarProperty Name="Account_EmailAddress" ColumnName="Account_EmailAddress" />
+          <ScalarProperty Name="Account_Country" ColumnName="Account_Country" />
+          <ScalarProperty Name="Account_City" ColumnName="Account_City" />
+          <ScalarProperty Name="Account_Mobile" ColumnName="Account_Mobile" />
+          <ScalarProperty Name="Account_Phone" ColumnName="Account_Phone" />
+          <ScalarProperty Name="Account_UserName" ColumnName="Account_UserName" />
+          <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Account_CreatedDate" ColumnName="Account_CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Cities">
+      <EntityTypeMapping TypeName="Store_MVCModel.tbl_Cities">
+        <MappingFragment StoreEntitySet="tbl_Cities">
+          <ScalarProperty Name="City_ID" ColumnName="City_ID" />
+          <ScalarProperty Name="City_Name" ColumnName="City_Name" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Orders">
+      <EntityTypeMapping TypeName="Store_MVCModel.tbl_Orders">
+        <MappingFragment StoreEntitySet="tbl_Orders">
+          <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+          <ScalarProperty Name="Order_Number" ColumnName="Order_Number" />
+          <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Roles">
+      <EntityTypeMapping TypeName="Store_MVCModel.tbl_Roles">
+        <MappingFragment StoreEntitySet="tbl_Roles">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

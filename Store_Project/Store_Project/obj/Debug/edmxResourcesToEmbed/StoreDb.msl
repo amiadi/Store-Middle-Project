@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreDBStoreContainer" CdmEntityContainer="StoreEntity">
+    <EntitySetMapping Name="tbl_Accounts">
+      <EntityTypeMapping TypeName="ModelStoreDB.tbl_Accounts">
+        <MappingFragment StoreEntitySet="tbl_Accounts">
+          <ScalarProperty Name="Account_ID" ColumnName="Account_ID" />
+          <ScalarProperty Name="Account_UserName" ColumnName="Account_UserName" />
+          <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Account_CreatedDate" ColumnName="Account_CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Customers">
+      <EntityTypeMapping TypeName="ModelStoreDB.tbl_Customers">
+        <MappingFragment StoreEntitySet="tbl_Customers">
+          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+          <ScalarProperty Name="Customer_FirstName" ColumnName="Customer_FirstName" />
+          <ScalarProperty Name="Customer_LastName" ColumnName="Customer_LastName" />
+          <ScalarProperty Name="Customer_BirthDate" ColumnName="Customer_BirthDate" />
+          <ScalarProperty Name="Customer_EmailAddress" ColumnName="Customer_EmailAddress" />
+          <ScalarProperty Name="Customer_Country" ColumnName="Customer_Country" />
+          <ScalarProperty Name="Customer_City" ColumnName="Customer_City" />
+          <ScalarProperty Name="Customer_Mobile" ColumnName="Customer_Mobile" />
+          <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
+          <ScalarProperty Name="Customer_CreatedDate" ColumnName="Customer_CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Orders">
+      <EntityTypeMapping TypeName="ModelStoreDB.tbl_Orders">
+        <MappingFragment StoreEntitySet="tbl_Orders">
+          <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+          <ScalarProperty Name="Order_Number" ColumnName="Order_Number" />
+          <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Roles">
+      <EntityTypeMapping TypeName="ModelStoreDB.tbl_Roles">
+        <MappingFragment StoreEntitySet="tbl_Roles">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

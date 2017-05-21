@@ -1,0 +1,35 @@
+﻿@model Store_Project.tbl_Cities
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Cities</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.City_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Accounts.Account_FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Accounts.Account_FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.City_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

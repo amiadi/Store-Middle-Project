@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Store_MVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_Accounts">
+    <Key>
+      <PropertyRef Name="Account_ID" />
+    </Key>
+    <Property Name="Account_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account_FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account_LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account_BirthDate" Type="smalldatetime" />
+    <Property Name="Account_EmailAddress" Type="nvarchar" MaxLength="100" />
+    <Property Name="Account_Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account_City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account_Mobile" Type="int" />
+    <Property Name="Account_Phone" Type="int" />
+    <Property Name="Account_UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account_Password" Type="nvarchar" MaxLength="30" />
+    <Property Name="Role_ID" Type="int" />
+    <Property Name="Account_CreatedDate" Type="smalldatetime" />
+  </EntityType>
+  <EntityType Name="tbl_Cities">
+    <Key>
+      <PropertyRef Name="City_ID" />
+    </Key>
+    <Property Name="City_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AccountID" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_Orders">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order_Number" Type="int" />
+    <Property Name="Order_Date" Type="datetime" />
+    <Property Name="AccountID" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_Roles">
+    <Key>
+      <PropertyRef Name="Role_ID" />
+    </Key>
+    <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role_Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Account_UserName_To_Roles_ID">
+    <End Role="tbl_Roles" Type="Self.tbl_Roles" Multiplicity="0..1" />
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Roles">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="tbl_Accounts">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountCity">
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="0..1" />
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Accounts">
+        <PropertyRef Name="Account_ID" />
+      </Principal>
+      <Dependent Role="tbl_Cities">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountOrder">
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="0..1" />
+    <End Role="tbl_Orders" Type="Self.tbl_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Accounts">
+        <PropertyRef Name="Account_ID" />
+      </Principal>
+      <Dependent Role="tbl_Orders">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Store_MVCModelStoreContainer">
+    <EntitySet Name="tbl_Accounts" EntityType="Self.tbl_Accounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Cities" EntityType="Self.tbl_Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Orders" EntityType="Self.tbl_Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Roles" EntityType="Self.tbl_Roles" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Account_UserName_To_Roles_ID" Association="Self.FK_Account_UserName_To_Roles_ID">
+      <End Role="tbl_Roles" EntitySet="tbl_Roles" />
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountCity" Association="Self.FK_AccountCity">
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountOrder" Association="Self.FK_AccountOrder">
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+      <End Role="tbl_Orders" EntitySet="tbl_Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

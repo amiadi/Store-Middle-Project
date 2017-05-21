@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Store_MVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_Accounts">
+    <Key>
+      <PropertyRef Name="Account_ID" />
+    </Key>
+    <Property Name="Account_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Account_FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account_BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="Account_EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Account_Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account_City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account_Mobile" Type="Int32" />
+    <Property Name="Account_Phone" Type="Int32" />
+    <Property Name="Account_UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account_Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Role_ID" Type="Int32" />
+    <Property Name="Account_CreatedDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="tbl_Roles" Relationship="Self.FK_Account_UserName_To_Roles_ID" FromRole="tbl_Accounts" ToRole="tbl_Roles" />
+    <NavigationProperty Name="tbl_Cities" Relationship="Self.FK_AccountCity" FromRole="tbl_Accounts" ToRole="tbl_Cities" />
+    <NavigationProperty Name="tbl_Orders" Relationship="Self.FK_AccountOrder" FromRole="tbl_Accounts" ToRole="tbl_Orders" />
+  </EntityType>
+  <EntityType Name="tbl_Cities">
+    <Key>
+      <PropertyRef Name="City_ID" />
+    </Key>
+    <Property Name="City_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccountID" Type="Int32" />
+    <NavigationProperty Name="tbl_Accounts" Relationship="Self.FK_AccountCity" FromRole="tbl_Cities" ToRole="tbl_Accounts" />
+  </EntityType>
+  <EntityType Name="tbl_Orders">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Order_Number" Type="Int32" />
+    <Property Name="Order_Date" Type="DateTime" Precision="3" />
+    <Property Name="AccountID" Type="Int32" />
+    <NavigationProperty Name="tbl_Accounts" Relationship="Self.FK_AccountOrder" FromRole="tbl_Orders" ToRole="tbl_Accounts" />
+  </EntityType>
+  <EntityType Name="tbl_Roles">
+    <Key>
+      <PropertyRef Name="Role_ID" />
+    </Key>
+    <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_Accounts" Relationship="Self.FK_Account_UserName_To_Roles_ID" FromRole="tbl_Roles" ToRole="tbl_Accounts" />
+  </EntityType>
+  <Association Name="FK_Account_UserName_To_Roles_ID">
+    <End Role="tbl_Roles" Type="Self.tbl_Roles" Multiplicity="0..1" />
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Roles">
+        <PropertyRef Name="Role_ID" />
+      </Principal>
+      <Dependent Role="tbl_Accounts">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountCity">
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="0..1" />
+    <End Role="tbl_Cities" Type="Self.tbl_Cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Accounts">
+        <PropertyRef Name="Account_ID" />
+      </Principal>
+      <Dependent Role="tbl_Cities">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountOrder">
+    <End Role="tbl_Accounts" Type="Self.tbl_Accounts" Multiplicity="0..1" />
+    <End Role="tbl_Orders" Type="Self.tbl_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Accounts">
+        <PropertyRef Name="Account_ID" />
+      </Principal>
+      <Dependent Role="tbl_Orders">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Store_MVCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Accounts" EntityType="Self.tbl_Accounts" />
+    <EntitySet Name="tbl_Cities" EntityType="Self.tbl_Cities" />
+    <EntitySet Name="tbl_Orders" EntityType="Self.tbl_Orders" />
+    <EntitySet Name="tbl_Roles" EntityType="Self.tbl_Roles" />
+    <AssociationSet Name="FK_Account_UserName_To_Roles_ID" Association="Self.FK_Account_UserName_To_Roles_ID">
+      <End Role="tbl_Roles" EntitySet="tbl_Roles" />
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountCity" Association="Self.FK_AccountCity">
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+      <End Role="tbl_Cities" EntitySet="tbl_Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountOrder" Association="Self.FK_AccountOrder">
+      <End Role="tbl_Accounts" EntitySet="tbl_Accounts" />
+      <End Role="tbl_Orders" EntitySet="tbl_Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
